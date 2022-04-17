@@ -1,0 +1,39 @@
+name: 'terraform enterprise run wait or apply'
+description: 'Wait for a terraform run, or apply a pending run'
+inputs:
+  action:
+    description: 'wait or apply for a TFE run'
+    required: true
+    default: 'wait'
+  clone-url:
+    description: 'of the repository triggering the TFE run'
+    required: true
+  commit-sha:
+    description: 'of the commit triggering the TFE run'
+    required: true
+  token:
+    description: 'to authenticate against TFE'
+    required: false
+  organization:
+    description: 'of the run'
+    required: true
+  workspace:
+    description: 'of the run'
+    required: false
+    default: ''
+  maximum-wait-time:
+    description: 'for the run to be in the expected state'
+    required: false
+    default: 45
+  wait-for-status:
+    description: 'space separated list of states to wait for'
+    required: false
+    default: ''
+  comment:
+    description: 'to include in the apply'
+    required: false
+    default: ''
+
+runs:
+  using: 'docker'
+  image: Dockerfile

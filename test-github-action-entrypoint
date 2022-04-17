@@ -1,0 +1,68 @@
+#!/bin/bash
+
+DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+source $DIR/../github-action-entrypoint
+
+test_full() {
+    INPUT_ACTION=wait
+    INPUT_CLONE_URL=https://github.com/binxio/tfe-run-wait.git
+    INPUT_COMMIT_SHA=e8b08d903af166333eb85158751e8db605510ec3
+    INPUT_ORGANIZATION=binxio
+    INPUT_WORKSPACE=tfe-run-wait-demo
+    INPUT_TOKEN=123123123123
+    INPUT_MAXIMUM_WAIT_TIME=40
+    INPUT_WAIT_FOR_STATUS="planned errored"
+    INPUT_COMMENT="apply for good"
+
+    CMD=$(build_command)
+    EXPECT="tfe-run-wait --clone-url https://github.com/binxio/tfe-run-wait.git --commit-sha e8b08d903af166333eb85158751e8db605510ec3 --organization binxio --workspace tfe-run-wait-demo --token 123123123123 --maximum-wait-time 40 --wait-for-status planned --wait-for-status errored --comment 'apply for good'"
+
+    if [[ $CMD != $EXPECT ]] ;then
+        echo "ERROR: expected $EXPECT, got $CMD" >&2
+        exit 1
+    fi
+}
+
+test_apply() {
+    INPUT_ACTION=apply
+    INPUT_CLONE_URL=https://github.com/binxio/tfe-run-wait.git
+    INPUT_COMMIT_SHA=e8b08d903af166333eb85158751e8db605510ec3
+    INPUT_ORGANIZATION=binxio
+    INPUT_WORKSPACE=tfe-run-wait-demo
+    INPUT_TOKEN=123123123123
+    INPUT_MAXIMUM_WAIT_TIME=40
+    INPUT_COMMENT="apply for good"
+    INPUT_WAIT_FOR_STATUS=""
+
+    CMD=$(build_command)
+    EXPECT="tfe-run-apply --clone-url https://github.com/binxio/tfe-run-wait.git --commit-sha e8b08d903af166333eb85158751e8db605510ec3 --organization binxio --workspace tfe-run-wait-demo --token 123123123123 --maximum-wait-time 40 --comment 'apply for good'"
+
+    if [[ $CMD != $EXPECT ]] ;then
+        echo "ERROR: expected $EXPECT, got $CMD" >&2
+        exit 1
+    fi
+}
+
+test_minimum() {
+    INPUT_ACTION=wait
+    INPUT_CLONE_URL=https://github.com/binxio/tfe-run-wait.git
+    INPUT_COMMIT_SHA=e8b08d903af166333eb85158751e8db605510ec3
+    INPUT_ORGANIZATION=binxio
+    INPUT_WORKSPACE=""
+    INPUT_TOKEN=""
+    INPUT_MAXIMUM_WAIT_TIME=""
+    INPUT_COMMENT=""
+    INPUT_WAIT_FOR_STATUS=""
+
+    CMD=$(build_command)
+    EXPECT="tfe-run-wait --clone-url https://github.com/binxio/tfe-run-wait.git --commit-sha e8b08d903af166333eb85158751e8db605510ec3 --organization binxio"
+
+    if [[ $CMD != $EXPECT ]] ;then
+        echo "ERROR: expected $EXPECT, got $CMD" >&2
+        exit 1
+    fi
+}
+
+test_full
+test_apply
+test_minimum

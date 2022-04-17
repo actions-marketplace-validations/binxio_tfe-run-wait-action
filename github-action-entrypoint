@@ -1,0 +1,51 @@
+#!/bin/bash
+set -x -e -o pipefail
+
+(return 0 2>/dev/null) && SOURCED=1 || SOURCED=0
+
+build_command() {
+  CMD=()
+  if [[ $INPUT_ACTION == apply ]]; then
+      CMD+=("tfe-run-apply")
+  elif [[ $INPUT_ACTION == wait ]]; then
+      CMD+=("tfe-run-wait")
+  else
+      echo "Usage: $(basename $0) [wait|apply] ...." >&2
+      return 1
+  fi
+  CMD+=("--clone-url")
+  CMD+=($INPUT_CLONE_URL)
+  CMD+=("--commit-sha")
+  CMD+=($INPUT_COMMIT_SHA)
+  CMD+=("--organization")
+  CMD+=($INPUT_ORGANIZATION)
+  if [[ -n $INPUT_WORKSPACE ]]; then
+    CMD+=("--workspace")
+    CMD+=($INPUT_WORKSPACE)
+  fi
+  if [[ -n $INPUT_TOKEN ]]; then
+    CMD+=("--token")
+    CMD+=($INPUT_TOKEN)
+  fi
+  if [[ -n $INPUT_MAXIMUM_WAIT_TIME ]] ; then
+    CMD+=("--maximum-wait-time")
+    CMD+=($INPUT_MAXIMUM_WAIT_TIME)
+  fi
+
+  for state in $INPUT_WAIT_FOR_STATUS; do
+    CMD+=("--wait-for-status")
+    CMD+=($state)
+  done
+
+  if [[ -n $INPUT_COMMENT ]]; then
+    CMD+=("--comment")
+    CMD+=("'$INPUT_COMMENT'")
+  fi
+  echo "${CMD[*]}"
+}
+
+
+[[ $SOURCED -eq 1 ]] && return 0
+
+CMD=$(build_command)
+eval $CMD

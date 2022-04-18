@@ -5,10 +5,10 @@ inputs:
     description: 'wait or apply for a TFE run'
     required: true
     default: 'wait'
-  clone-url:
+  clone_url:
     description: 'of the repository triggering the TFE run'
     required: true
-  commit-sha:
+  commit_sha:
     description: 'of the commit triggering the TFE run'
     required: true
   token:
@@ -21,11 +21,11 @@ inputs:
     description: 'of the run'
     required: false
     default: ''
-  maximum-wait-time:
+  maximum_wait_time:
     description: 'for the run to be in the expected state'
     required: false
     default: 45
-  wait-for-status:
+  wait_for_status:
     description: 'space separated list of states to wait for'
     required: false
     default: ''

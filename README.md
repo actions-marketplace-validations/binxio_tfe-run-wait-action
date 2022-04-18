@@ -8,13 +8,13 @@ waits for a Terraform Enterprise run to complete. Uses [tfe-run-wait](https://py
 | name        | required | default | description |
 |-------------------|-------|------|-------------|
 | action            | true  | wait | wait or apply for a TFE run |
-| clone-url         | true  |      | of the repository triggering the TFE run |
-| commit-sha        | true  |      | of the commit triggering the TFE run |
+| clone_url         | true  |      | of the repository triggering the TFE run |
+| commit_sha        | true  |      | of the commit triggering the TFE run |
 | token             | false |      | to authenticate against TFE |
 | organization      | true  |      | of the run |
 | workspace         | false |      | of the run |
-| maximum-wait-time | false | 45   | for the run to be in the expected state |
-| wait-for-status   | false |      | space separated list of states to wait for |
+| maximum_wait_time | false | 45   | for the run to be in the expected state |
+| wait_for_status   | false |      | space separated list of states to wait for |
 | comment           | false |      | to include in the apply |
 
 ## Outputs

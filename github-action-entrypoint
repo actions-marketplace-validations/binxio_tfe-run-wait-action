@@ -19,6 +19,10 @@ build_command() {
   CMD+=($INPUT_COMMIT_SHA)
   CMD+=("--organization")
   CMD+=($INPUT_ORGANIZATION)
+  if [[ -n $INPUT_BRANCH ]]; then
+    CMD+=("--branch")
+    CMD+=($INPUT_BRANCH)
+  fi
   if [[ -n $INPUT_WORKSPACE ]]; then
     CMD+=("--workspace")
     CMD+=($INPUT_WORKSPACE)

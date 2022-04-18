@@ -11,6 +11,9 @@ inputs:
   commit_sha:
     description: 'of the commit triggering the TFE run'
     required: true
+  branch:
+    description: 'on which the commit triggered the TFE run'
+    required: false
   token:
     description: 'to authenticate against TFE'
     required: false

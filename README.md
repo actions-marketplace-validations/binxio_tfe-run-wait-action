@@ -32,5 +32,5 @@ with:
   branch: main
   clone_url: ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}.git
   commit_sha: ${GITHUB_SHA}
-  organization: binxio
+  organization: ${{ secrets.TFE_ORGANIZATION }}
 ```
